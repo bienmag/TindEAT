@@ -20,7 +20,7 @@ import nope from "../../../assets/nope.png";
 const swipe_velocity = 900;
 
 const AnimatedStack = (props) => {
-  const { data, renderItem } = props;
+  const { data, renderItem, onSwipeRight, onSwipeLeft } = props;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
@@ -81,6 +81,8 @@ const AnimatedStack = (props) => {
         {},
         () => runOnJS(setCurrentIndex)(currentIndex + 1)
       );
+      const onSwipe = e.velocityX > 0 ? onSwipeRight : onSwipeLeft;
+      runOnJS(onSwipe)(currentFood);
     },
   });
 
