@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Card from "./src/components/TinderCard";
 import { burgers } from "./public/burgers";
@@ -18,6 +18,12 @@ import {
 } from "react-native-gesture-handler";
 
 const App = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState(1);
+
+  const currentFood = burgers[currentIndex];
+  const nextFood = burgers[nextIndex];
+
   const { width: screenWidth } = useWindowDimensions();
   const hiddenTranslateX = 2 * screenWidth;
   const translateX = useSharedValue(0);
@@ -50,10 +56,13 @@ const App = () => {
 
   return (
     <View style={styles.pageContainer}>
+      <View style={styles.nextCardContainer}>
+        <Card food={nextFood}></Card>
+      </View>
       <GestureHandlerRootView style={styles.pageContainer}>
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.View style={[styles.animatedCard, cardStyle]}>
-            <Card food={burgers[0]}></Card>
+            <Card food={currentFood}></Card>
           </Animated.View>
         </PanGestureHandler>
       </GestureHandlerRootView>
@@ -71,7 +80,13 @@ const styles = StyleSheet.create({
 
   animatedCard: {
     width: "100%",
-    height: "100%",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  nextCardContainer: {
+    ...StyleSheet.absoluteFillObject,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
