@@ -17,6 +17,8 @@ import {
   PanGestureHandler,
 } from "react-native-gesture-handler";
 
+const swipe_velocity = 900;
+
 const App = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
@@ -42,6 +44,23 @@ const App = () => {
     ],
   }));
 
+  const nextCardStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        scale: interpolate(
+          translateX.value,
+          [-hiddenTranslateX, 0, hiddenTranslateX],
+          [1, 0.8, 1]
+        ),
+      },
+    ],
+    opacity: interpolate(
+      translateX.value,
+      [-hiddenTranslateX, 0, hiddenTranslateX],
+      [1, 0.5, 1]
+    ),
+  }));
+
   const gestureHandler = useAnimatedGestureHandler({
     onStart: (_, ctx) => {
       ctx.startX = translateX.value;
@@ -49,15 +68,24 @@ const App = () => {
     onActive: (e, ctx) => {
       translateX.value = ctx.startX + e.translationX;
     },
-    onEnd: () => {
-      console.log("Touch end");
+    onEnd: (e) => {
+      if (Math.abs(e.velocityX) < swipe_velocity) {
+        translateX.value = withSpring(0);
+        return;
+      }
+
+      translateX.value = withSpring(
+        e.velocityX > 0 ? hiddenTranslateX : -hiddenTranslateX
+      );
     },
   });
 
   return (
     <View style={styles.pageContainer}>
       <View style={styles.nextCardContainer}>
-        <Card food={nextFood}></Card>
+        <Animated.View style={[styles.animatedCard, nextCardStyle]}>
+          <Card food={nextFood}></Card>
+        </Animated.View>
       </View>
       <GestureHandlerRootView style={styles.pageContainer}>
         <PanGestureHandler onGestureEvent={gestureHandler}>
