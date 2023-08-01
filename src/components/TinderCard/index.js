@@ -1,27 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Text, Image, ImageBackground, View, StyleSheet } from "react-native";
-import Card from "./src/components/TinderCard";
-import { burgers } from "./public/burgers";
+import React from "react";
+import { Text, View, ImageBackground, StyleSheet } from "react-native";
 
-const App = () => {
-  const [food, setFood] = useState([]);
-  useEffect(() => {
-    setFood(burgers);
-  }, []);
+const Card = (props) => {
+  const { dsc, img, country } = props.food;
 
   return (
-    <View style={styles.pageContainer}>
-      <Card food={food[0]}></Card>
+    <View style={styles.card}>
+      <ImageBackground source={{ uri: img }} style={styles.image}>
+        <View style={styles.cardInner}>
+          <Text style={styles.name}>{dsc}</Text>
+          <Text style={styles.bio}>{country}</Text>
+        </View>
+      </ImageBackground>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  pageContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
   card: {
     width: "95%",
     height: "70%",
@@ -61,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Card;
