@@ -4,14 +4,9 @@ import Card from "./src/components/TinderCard";
 import { burgers } from "./public/burgers";
 
 const App = () => {
-  const [food, setFood] = useState([]);
-  useEffect(() => {
-    setFood(burgers);
-  }, []);
-
   return (
     <View style={styles.pageContainer}>
-      <Card food={food[0]}></Card>
+      <Card food={burgers[0]}></Card>
     </View>
   );
 };
