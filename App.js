@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, useWindowDimensions } from "react-native";
+import { View, StyleSheet, useWindowDimensions, Image } from "react-native";
 import Card from "./src/components/TinderCard";
 import { burgers } from "./public/burgers";
 import Animated, {
@@ -17,6 +17,8 @@ import {
   GestureHandlerRootView,
   PanGestureHandler,
 } from "react-native-gesture-handler";
+import like from "./assets/LIKE.png";
+import nope from "./assets/nope.png";
 
 const swipe_velocity = 900;
 
@@ -83,6 +85,14 @@ const App = () => {
     },
   });
 
+  const likeStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(translateX.value, [0, hiddenTranslateX / 5], [0, 1]),
+  }));
+
+  const nopeStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(translateX.value, [0, -hiddenTranslateX / 5], [0, 1]),
+  }));
+
   useEffect(() => {
     translateX.value = 0;
     setNextIndex(currentIndex + 1);
@@ -99,6 +109,16 @@ const App = () => {
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.View style={[styles.animatedCard, cardStyle]}>
             <Card food={currentFood}></Card>
+            <Animated.Image
+              source={like}
+              style={[styles.like, { left: 10 }, likeStyle]}
+              resizeMode="contain"
+            ></Animated.Image>
+            <Animated.Image
+              source={nope}
+              style={[styles.like, { right: 10 }, nopeStyle]}
+              resizeMode="contain"
+            ></Animated.Image>
           </Animated.View>
         </PanGestureHandler>
       </GestureHandlerRootView>
@@ -125,6 +145,12 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+  },
+  like: {
+    width: 150,
+    height: 150,
+    position: "absolute",
+    top: 120,
   },
 });
 
