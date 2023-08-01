@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Card from "./src/components/TinderCard";
 import { burgers } from "./public/burgers";
@@ -11,6 +11,7 @@ import Animated, {
   useAnimatedGestureHandler,
   useDerivedValue,
   interpolate,
+  runOnJS,
 } from "react-native-reanimated";
 import {
   GestureHandlerRootView,
@@ -75,10 +76,17 @@ const App = () => {
       }
 
       translateX.value = withSpring(
-        e.velocityX > 0 ? hiddenTranslateX : -hiddenTranslateX
+        e.velocityX > 0 ? hiddenTranslateX : -hiddenTranslateX,
+        {},
+        () => runOnJS(setCurrentIndex)(currentIndex + 1)
       );
     },
   });
+
+  useEffect(() => {
+    translateX.value = 0;
+    setNextIndex(currentIndex + 1);
+  }, [currentIndex, translateX]);
 
   return (
     <View style={styles.pageContainer}>
