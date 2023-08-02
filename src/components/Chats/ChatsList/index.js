@@ -1,13 +1,13 @@
 import React from "react";
 import { ScrollView, StyleSheet, FlatList } from "react-native";
-import ChatRoom from "../ChatItem";
+import ChatListItem from "../ChatItem";
 function Chats(props) {
   const burgers = props.food;
   return (
     <ScrollView style={styles.chatsContainer} vertical={true}>
       <FlatList
         data={burgers}
-        renderItem={({ item }) => <ChatRoom burger={item} />}
+        renderItem={({ item }) => <ChatListItem burger={item} />}
         keyExtractor={(item) => item.id}
       ></FlatList>
     </ScrollView>

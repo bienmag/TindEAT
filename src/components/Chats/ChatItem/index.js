@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, Pressable, View, StyleSheet, Image } from "react-native";
-function ChatRoom({ burger }) {
+function ChatListItem({ burger }) {
   return (
     <Pressable onPress={() => console.warn(burger.dsc)}>
       <View style={styles.container}>
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   midContainer: {},
 });
 
-export default ChatRoom;
+export default ChatListItem;
