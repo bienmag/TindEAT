@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 3,
     padding: 3,
-    borderColor: "red",
+    borderColor: "red", // change to tinder color
   },
   image: {
     width: "100%",
