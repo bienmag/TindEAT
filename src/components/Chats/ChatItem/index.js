@@ -1,8 +1,21 @@
 import React from "react";
-import { Text, Pressable, View, StyleSheet, Image } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 function ChatListItem({ burger }) {
+  const navigation = useNavigation();
+
+  const onClick = () => {
+    navigation.navigate("chatroom", { burger });
+  };
+
   return (
-    <Pressable onPress={() => console.warn(burger.dsc)}>
+    <TouchableWithoutFeedback onPress={onClick}>
       <View style={styles.container}>
         <View style={styles.leftContainer}>
           <Image style={styles.avatar} source={{ uri: burger.img }}></Image>
@@ -11,7 +24,7 @@ function ChatListItem({ burger }) {
           <Text>{burger.dsc}</Text>
         </View>
       </View>
-    </Pressable>
+    </TouchableWithoutFeedback>
   );
 }
 
