@@ -6,6 +6,7 @@ import MatchesScreen from "./src/screens/MatchesScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
 
 const App = () => {
   const [activeScreen, setActiveScreen] = useState("home");
@@ -14,34 +15,36 @@ const App = () => {
   const activeColor = "#F76C6B";
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.topNavigation}>
-        <Pressable onPress={() => setActiveScreen("home")}>
-          <Fontisto
-            name="tinder"
+    <NavigationContainer>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.topNavigation}>
+          <Pressable onPress={() => setActiveScreen("home")}>
+            <Fontisto
+              name="tinder"
+              size={30}
+              color={activeScreen === "home" ? activeColor : color}
+            />
+          </Pressable>
+          <MaterialCommunityIcons
+            name="star-four-points"
             size={30}
-            color={activeScreen === "home" ? activeColor : color}
+            color={color}
           />
-        </Pressable>
-        <MaterialCommunityIcons
-          name="star-four-points"
-          size={30}
-          color={color}
-        />
-        <Pressable onPress={() => setActiveScreen("matches")}>
-          <Ionicons
-            name="chatbubbles-sharp"
-            size={30}
-            color={activeScreen === "matches" ? activeColor : color}
-          />
-        </Pressable>
-        <Ionicons name="ios-person" size={30} color={color} />
-      </View>
-      <View style={styles.pageContainer}>
-        {activeScreen === "home" && <HomeScreen />}
-        {activeScreen === "matches" && <MatchesScreen />}
-      </View>
-    </SafeAreaView>
+          <Pressable onPress={() => setActiveScreen("matches")}>
+            <Ionicons
+              name="chatbubbles-sharp"
+              size={30}
+              color={activeScreen === "matches" ? activeColor : color}
+            />
+          </Pressable>
+          <Ionicons name="ios-person" size={30} color={color} />
+        </View>
+        <View style={styles.pageContainer}>
+          {activeScreen === "home" && <HomeScreen />}
+          {activeScreen === "matches" && <MatchesScreen />}
+        </View>
+      </SafeAreaView>
+    </NavigationContainer>
   );
 };
 

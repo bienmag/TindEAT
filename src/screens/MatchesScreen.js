@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { burgers } from "../../public/burgers";
+import Chats from "../components/Chats/ChatsList";
 
 const MatchesScreen = () => {
   return (
@@ -26,6 +27,7 @@ const MatchesScreen = () => {
           </View>
         ))}
       </ScrollView>
+      <Chats food={burgers}></Chats>
     </SafeAreaView>
   );
 };
@@ -46,6 +48,7 @@ const styles = StyleSheet.create({
   },
   users: {
     flexDirection: "row",
+    paddingBottom: 40,
   },
 
   user: {
