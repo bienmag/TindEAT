@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, FlatList } from "react-native";
-import ChatListItem from "../ChatItem";
+import ChatListItem from "../ChatListItem";
 function Chats(props) {
   const burgers = props.food;
   return (
