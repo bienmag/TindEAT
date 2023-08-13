@@ -15,15 +15,15 @@ const ProfileScreen = () => {
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [user, setUser] = useState(null);
-
+  const [currentUser, setCurrentUser] = useState(null);
   useEffect(() => {
     const getCurrentUser = async () => {
-      const currentUser = await Auth.currentAuthenticatedUser();
+      const current = await Auth.currentAuthenticatedUser();
+      setCurrentUser(current);
 
       const dbUsers = await DataStore.query(User, (u) =>
-        u.sub.eq(currentUser.attributes.sub)
+        u.sub.eq(current.attributes.sub)
       );
-      console.log("dbusers", dbUsers);
 
       if (dbUsers.length < 0) {
         return;
@@ -33,7 +33,6 @@ const ProfileScreen = () => {
     };
     getCurrentUser();
   }, []);
-  console.log("user", user);
 
   const isValid = () => {
     return name && bio;
@@ -49,11 +48,12 @@ const ProfileScreen = () => {
           (updated.name = name), (updated.bio = bio);
         })
       );
+      console.warn("user updated");
     } else {
       const newUser = new User({
         name,
         bio,
-        sub: user.attributes.sub,
+        sub: currentUser.attributes.sub,
       });
 
       DataStore.save(newUser);
