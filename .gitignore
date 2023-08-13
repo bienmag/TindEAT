@@ -36,6 +36,7 @@ yarn-error.*
 
 # env
 .env*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
+.env
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
