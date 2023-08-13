@@ -1,12 +1,18 @@
 import "react-native-gesture-handler";
 import React from "react";
 import ChatRoom from "./src/components/Chats/ChatRoom";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/screens/Home";
-import { Image, SafeAreaView, Text, View } from "react-native";
-
+import { Image } from "react-native";
+import { Amplify } from "aws-amplify";
+import config from "./src/aws-exports";
+import {
+  useAuthenticator,
+  withAuthenticator,
+} from "@aws-amplify/ui-react-native";
+import ProfileScreen from "./src/screens/ProfileScreen";
+Amplify.configure(config);
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -32,9 +38,10 @@ function App() {
             ),
           })}
         />
+        <Stack.Screen name="profile" component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-export default App;
+export default withAuthenticator(App);

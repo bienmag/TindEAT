@@ -1,17 +1,8 @@
 import { useEffect, useState } from "react";
-import {
-  Image,
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  Pressable,
-  Button,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Image, Text, View, StyleSheet, TextInput, Button } from "react-native";
+
 import { getAnswerFromAI } from "../../../api";
 import Messages from "../Messages";
-import HomeScreen from "../../../screens/HomeScreen";
 
 function ChatRoom(props) {
   const [firstMessage, setFirstMessage] = useState();
@@ -24,6 +15,7 @@ function ChatRoom(props) {
       ...messages,
       { id: messages.length + 1, user: user, text: text },
     ]);
+    setText("");
   }
 
   useEffect(() => {
@@ -73,26 +65,29 @@ function ChatRoom(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.upperContainer}>
-        <Image
-          style={styles.avatar}
-          source={{ uri: props.route.params.burger.img }}
-        />
-        <Text>{props.route.params.burger.dsc}</Text>
-      </View>
+      {messages.length === 0 && (
+        <View style={styles.upperContainer}>
+          <Image
+            style={styles.avatar}
+            source={{ uri: props.route.params.burger.img }}
+          />
+          <Text>{props.route.params.burger.dsc}</Text>
+        </View>
+      )}
+
       {messages.length !== 0 && <Messages messages={messages} />}
       <View style={styles.lowerContainer}>
         <TextInput
           style={styles.input}
           onChangeText={(newText) => setText(newText)}
-          value={text}
-          placeholder="useless placeholder"
+          defaultValue={text}
+          placeholder="Type your message"
         />
         <Button
           style={styles.button}
           onPress={sendMessage}
           title="Send"
-          color="#841584"
+          color="blue"
           accessibilityLabel="Send a message"
         />
       </View>
@@ -108,6 +103,8 @@ const styles = StyleSheet.create({
   upperContainer: {
     width: "100%",
     alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
   },
 
   avatar: {

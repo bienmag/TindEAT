@@ -8,6 +8,7 @@ import { Fontisto } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
+import ProfileScreen from "./ProfileScreen";
 
 function Home() {
   const color = "#B5B5B5";
@@ -38,11 +39,14 @@ function Home() {
             // color={getActiveRouteName() === "matches" ? activeColor : color}
           />
         </Pressable>
-        <Ionicons name="ios-person" size={30} color={color} />
+        <Pressable onPress={() => navigation.navigate("profile")}>
+          <Ionicons name="ios-person" size={30} color={color} />
+        </Pressable>
       </View>
       <View style={styles.pageContainer}>
         {route.name === "home" && <HomeScreen />}
         {route.name === "matches" && <MatchesScreen />}
+        {route.name === "profile" && <ProfileScreen />}
       </View>
     </SafeAreaView>
   );

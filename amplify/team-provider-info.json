@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-tindeat-staging-111447-authRole",
+      "UnauthRoleArn": "arn:aws:iam::367216436448:role/amplify-tindeat-staging-111447-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::367216436448:role/amplify-tindeat-staging-111447-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-tindeat-staging-111447-deployment",
+      "UnauthRoleName": "amplify-tindeat-staging-111447-unauthRole",
+      "StackName": "amplify-tindeat-staging-111447",
+      "StackId": "arn:aws:cloudformation:eu-north-1:367216436448:stack/amplify-tindeat-staging-111447/9d6ff040-39ca-11ee-a6d7-06c935814252",
+      "AmplifyAppId": "d1nbqhvhs0aw0i"
+    },
+    "categories": {
+      "auth": {
+        "TindEAT": {}
+      }
+    }
+  }
+}
