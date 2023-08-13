@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import react, { useEffect, useState } from "react";
 import {
   Pressable,
   SafeAreaView,
@@ -8,27 +8,56 @@ import {
   View,
 } from "react-native";
 import { User } from "../models";
-import { DataStore } from "aws-amplify";
+import { Auth, DataStore } from "aws-amplify";
 import "core-js/full/symbol/async-iterator";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      const currentUser = await Auth.currentAuthenticatedUser();
+
+      const dbUsers = await DataStore.query(User, (u) =>
+        u.sub.eq(currentUser.attributes.sub)
+      );
+      console.log("dbusers", dbUsers);
+
+      if (dbUsers.length < 0) {
+        return;
+      }
+      const dbUser = dbUsers[0];
+      setUser(dbUser);
+    };
+    getCurrentUser();
+  }, []);
+  console.log("user", user);
 
   const isValid = () => {
-    // return name && bio;
-    return name;
+    return name && bio;
   };
-  const save = () => {
+  const save = async () => {
     if (!isValid()) {
       console.warn("Not valid");
       return;
     }
-    const newUser = new User({
-      name,
-    });
+    if (user) {
+      const updatedUser = await DataStore.save(
+        User.copyOf(user, (updated) => {
+          (updated.name = name), (updated.bio = bio);
+        })
+      );
+    } else {
+      const newUser = new User({
+        name,
+        bio,
+        sub: user.attributes.sub,
+      });
 
-    DataStore.save(newUser);
+      DataStore.save(newUser);
+    }
   };
 
   return (
@@ -51,7 +80,15 @@ const ProfileScreen = () => {
         <Pressable style={styles.button}>
           <Text onPress={save}>Save</Text>
         </Pressable>
-        {/* do sign out */}
+        <Pressable style={styles.button}>
+          <Text
+            onPress={() => {
+              Auth.signOut();
+            }}
+          >
+            Sign out
+          </Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );

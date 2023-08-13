@@ -7,10 +7,7 @@ import Home from "./src/screens/Home";
 import { Image } from "react-native";
 import { Amplify } from "aws-amplify";
 import config from "./src/aws-exports";
-import {
-  useAuthenticator,
-  withAuthenticator,
-} from "@aws-amplify/ui-react-native";
+import { withAuthenticator } from "@aws-amplify/ui-react-native";
 import ProfileScreen from "./src/screens/ProfileScreen";
 Amplify.configure(config);
 const Stack = createNativeStackNavigator();

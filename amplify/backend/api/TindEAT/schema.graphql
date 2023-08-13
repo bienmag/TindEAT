@@ -9,5 +9,6 @@ type User @model @auth(rules: [{allow: public}]) {
   image: String
   bio: String
   matches: [Match] @manyToMany(relationName: "MatchUser")
+  sub: String!
 }
  

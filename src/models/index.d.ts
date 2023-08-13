@@ -44,6 +44,7 @@ type EagerUser = {
   readonly image?: string | null;
   readonly bio?: string | null;
   readonly matches?: (MatchUser | null)[] | null;
+  readonly sub: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -58,6 +59,7 @@ type LazyUser = {
   readonly image?: string | null;
   readonly bio?: string | null;
   readonly matches: AsyncCollection<MatchUser>;
+  readonly sub: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
