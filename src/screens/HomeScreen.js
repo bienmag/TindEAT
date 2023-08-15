@@ -1,16 +1,26 @@
 import "react-native-gesture-handler";
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Text } from "react-native";
 import Card from "../components/TinderCard";
-import { burgers } from "../../public/burgers";
 import AnimatedStack from "../components/AnimatedStack";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-
 import { Feather } from "@expo/vector-icons";
+import { DataStore } from "aws-amplify";
+import { Food } from "../models";
 
 const HomeScreen = () => {
+  const [burgers, setBurgers] = useState([]);
+
+  useEffect(() => {
+    const fetchBurgers = async () => {
+      const data = await DataStore.query(Food);
+      setBurgers(data);
+    };
+    fetchBurgers();
+  }, []);
+
   const onSwipeRight = (food) => {
     console.warn("swipe right", food.dsc);
   };
@@ -21,12 +31,18 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.pageContainer}>
-      <AnimatedStack
-        onSwipeLeft={onSwipeLeft}
-        onSwipeRight={onSwipeRight}
-        data={burgers}
-        renderItem={({ item }) => <Card food={item} />}
-      />
+      {burgers.length !== 0 ? (
+        <AnimatedStack
+          onSwipeLeft={onSwipeLeft}
+          onSwipeRight={onSwipeRight}
+          data={burgers}
+          renderItem={({ item }) => <Card food={item} />}
+        />
+      ) : (
+        <View>
+          <Text>No burgers</Text>
+        </View>
+      )}
       <View style={styles.icons}>
         <View style={styles.button}>
           <MaterialCommunityIcons name="restore" size={30} color="#FBD88B" />
