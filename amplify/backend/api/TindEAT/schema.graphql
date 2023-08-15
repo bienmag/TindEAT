@@ -1,3 +1,10 @@
+type UserToUser @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userId_1: ID
+  userId_2: ID
+  food: String
+}
+
 type UserToFood @model @auth(rules: [{allow: public}]) {
   id: ID!
   foodId: ID

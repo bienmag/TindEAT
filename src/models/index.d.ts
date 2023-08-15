@@ -6,6 +6,38 @@ import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
 
 
+type EagerUserToUser = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<UserToUser, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userId_1?: string | null;
+  readonly userId_2?: string | null;
+  readonly food?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyUserToUser = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<UserToUser, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userId_1?: string | null;
+  readonly userId_2?: string | null;
+  readonly food?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type UserToUser = LazyLoading extends LazyLoadingDisabled ? EagerUserToUser : LazyUserToUser
+
+export declare const UserToUser: (new (init: ModelInit<UserToUser>) => UserToUser) & {
+  copyOf(source: UserToUser, mutator: (draft: MutableModel<UserToUser>) => MutableModel<UserToUser> | void): UserToUser;
+}
+
 type EagerUserToFood = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<UserToFood, 'id'>;

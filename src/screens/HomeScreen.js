@@ -8,9 +8,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { DataStore } from "aws-amplify";
-import { UserToFood } from "../models";
+import { UserToFood, UserToUser } from "../models";
 const HomeScreen = ({ burgers, user }) => {
-  const [currentFood, setCurrentFood] = useState(null);
+  const [currentFood, setCurrentFood] = useState(burgers[0]);
+  console.log("current food", currentFood);
   const onSwipeRight = () => {
     console.warn("swipe right", currentFood.dsc);
     const createMatch = async () => {
@@ -27,6 +28,30 @@ const HomeScreen = ({ burgers, user }) => {
   const onSwipeLeft = () => {
     console.warn("swipe left", currentFood.dsc);
   };
+
+  //check if there is a match already with this food and if so create usersMatch
+  useEffect(() => {
+    async function fetchFoodMatches() {
+      const foodMatch = await DataStore.query(UserToFood, (userToFood) =>
+        userToFood.foodId.eq(currentFood.id)
+      );
+      console.log("food match", foodMatch[0]);
+      if (!foodMatch[0] === undefined) {
+        return;
+      } else {
+        const userMatch = await DataStore.save(
+          new UserToUser({
+            userId_1: user.id,
+            userId_2: foodMatch[0].userId,
+            food: currentFood.dsc,
+          })
+        );
+
+        //then i need to emit with socket that there is new userMatch
+      }
+    }
+    fetchFoodMatches();
+  }, [currentFood]);
 
   return (
     <View style={styles.pageContainer}>
