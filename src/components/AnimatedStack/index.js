@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, useWindowDimensions } from "react-native";
+import { View, StyleSheet, useWindowDimensions, Text } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -107,21 +107,27 @@ const AnimatedStack = (props) => {
         </Animated.View>
       </View>
       <GestureHandlerRootView style={styles.pageContainer}>
-        <PanGestureHandler onGestureEvent={gestureHandler}>
-          <Animated.View style={[styles.animatedCard, cardStyle]}>
-            {renderItem({ item: currentFood })}
-            <Animated.Image
-              source={like}
-              style={[styles.like, { left: 10 }, likeStyle]}
-              resizeMode="contain"
-            ></Animated.Image>
-            <Animated.Image
-              source={nope}
-              style={[styles.like, { right: 10 }, nopeStyle]}
-              resizeMode="contain"
-            ></Animated.Image>
-          </Animated.View>
-        </PanGestureHandler>
+        {currentFood !== undefined ? (
+          <PanGestureHandler onGestureEvent={gestureHandler}>
+            <Animated.View style={[styles.animatedCard, cardStyle]}>
+              {renderItem({ item: currentFood })}
+              <Animated.Image
+                source={like}
+                style={[styles.like, { left: 10 }, likeStyle]}
+                resizeMode="contain"
+              ></Animated.Image>
+              <Animated.Image
+                source={nope}
+                style={[styles.like, { right: 10 }, nopeStyle]}
+                resizeMode="contain"
+              ></Animated.Image>
+            </Animated.View>
+          </PanGestureHandler>
+        ) : (
+          <View>
+            <Text>Mo more food left.....</Text>
+          </View>
+        )}
       </GestureHandlerRootView>
     </View>
   );

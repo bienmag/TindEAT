@@ -7,22 +7,18 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-import { DataStore } from "aws-amplify";
-import { Food } from "../models";
-
-const HomeScreen = () => {
-  const [burgers, setBurgers] = useState([]);
-
-  useEffect(() => {
-    const fetchBurgers = async () => {
-      const data = await DataStore.query(Food);
-      setBurgers(data);
-    };
-    fetchBurgers();
-  }, []);
-
+const HomeScreen = ({ burgers, user }) => {
   const onSwipeRight = (food) => {
     console.warn("swipe right", food.dsc);
+    const createMatch = async () => {
+      await DataStore.save(
+        new UserToFood({
+          userId: user.id,
+          foodId: food.id,
+        })
+      );
+    };
+    createMatch();
   };
 
   const onSwipeLeft = (food) => {
@@ -31,18 +27,13 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.pageContainer}>
-      {burgers.length !== 0 ? (
-        <AnimatedStack
-          onSwipeLeft={onSwipeLeft}
-          onSwipeRight={onSwipeRight}
-          data={burgers}
-          renderItem={({ item }) => <Card food={item} />}
-        />
-      ) : (
-        <View>
-          <Text>No burgers</Text>
-        </View>
-      )}
+      <AnimatedStack
+        data={burgers}
+        renderItem={({ item }) => <Card food={item} />}
+        onSwipeRight={onSwipeRight}
+        onSwipeLeft={onSwipeLeft}
+      />
+
       <View style={styles.icons}>
         <View style={styles.button}>
           <MaterialCommunityIcons name="restore" size={30} color="#FBD88B" />

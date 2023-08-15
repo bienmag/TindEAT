@@ -16,7 +16,8 @@ function Home() {
   const navigation = useNavigation();
 
   const route = useRoute();
-
+  const burgers = route.params.burgers;
+  const user = route.params.user;
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.topNavigation}>
@@ -44,7 +45,7 @@ function Home() {
         </Pressable>
       </View>
       <View style={styles.pageContainer}>
-        {route.name === "home" && <HomeScreen />}
+        {route.name === "home" && <HomeScreen burgers={burgers} user={user} />}
         {route.name === "matches" && <MatchesScreen />}
         {route.name === "profile" && <ProfileScreen />}
       </View>
