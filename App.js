@@ -25,9 +25,7 @@ function App() {
       setBurgers(data);
     };
     fetchBurgers();
-  }, []);
 
-  useEffect(() => {
     const getCurrentUser = async () => {
       const current = await Auth.currentAuthenticatedUser();
 

@@ -20,7 +20,7 @@ import nope from "../../../assets/nope.png";
 const swipe_velocity = 900;
 
 const AnimatedStack = (props) => {
-  const { data, renderItem, onSwipeRight, onSwipeLeft } = props;
+  const { data, renderItem, onSwipeRight, onSwipeLeft, setCurrentFood } = props;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
@@ -82,7 +82,7 @@ const AnimatedStack = (props) => {
         () => runOnJS(setCurrentIndex)(currentIndex + 1)
       );
       const onSwipe = e.velocityX > 0 ? onSwipeRight : onSwipeLeft;
-      runOnJS(onSwipe)(currentFood);
+      onSwipe && runOnJS(onSwipe)();
     },
   });
 
@@ -99,6 +99,10 @@ const AnimatedStack = (props) => {
     setNextIndex(currentIndex + 1);
   }, [currentIndex, translateX]);
 
+  useEffect(() => {
+    setCurrentFood(currentFood);
+  }, [currentFood]);
+
   return (
     <View style={styles.pageContainer}>
       <View style={styles.nextCardContainer}>
@@ -107,27 +111,21 @@ const AnimatedStack = (props) => {
         </Animated.View>
       </View>
       <GestureHandlerRootView style={styles.pageContainer}>
-        {currentFood !== undefined ? (
-          <PanGestureHandler onGestureEvent={gestureHandler}>
-            <Animated.View style={[styles.animatedCard, cardStyle]}>
-              {renderItem({ item: currentFood })}
-              <Animated.Image
-                source={like}
-                style={[styles.like, { left: 10 }, likeStyle]}
-                resizeMode="contain"
-              ></Animated.Image>
-              <Animated.Image
-                source={nope}
-                style={[styles.like, { right: 10 }, nopeStyle]}
-                resizeMode="contain"
-              ></Animated.Image>
-            </Animated.View>
-          </PanGestureHandler>
-        ) : (
-          <View>
-            <Text>Mo more food left.....</Text>
-          </View>
-        )}
+        <PanGestureHandler onGestureEvent={gestureHandler}>
+          <Animated.View style={[styles.animatedCard, cardStyle]}>
+            {renderItem({ item: currentFood })}
+            <Animated.Image
+              source={like}
+              style={[styles.like, { left: 10 }, likeStyle]}
+              resizeMode="contain"
+            ></Animated.Image>
+            <Animated.Image
+              source={nope}
+              style={[styles.like, { right: 10 }, nopeStyle]}
+              resizeMode="contain"
+            ></Animated.Image>
+          </Animated.View>
+        </PanGestureHandler>
       </GestureHandlerRootView>
     </View>
   );

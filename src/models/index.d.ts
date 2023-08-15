@@ -1,42 +1,10 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
 
 
 
-
-type EagerUserToUser = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserToUser, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userId_1?: string | null;
-  readonly userId_2?: string | null;
-  readonly Users?: (UserToUserUser | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyUserToUser = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserToUser, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userId_1?: string | null;
-  readonly userId_2?: string | null;
-  readonly Users: AsyncCollection<UserToUserUser>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type UserToUser = LazyLoading extends LazyLoadingDisabled ? EagerUserToUser : LazyUserToUser
-
-export declare const UserToUser: (new (init: ModelInit<UserToUser>) => UserToUser) & {
-  copyOf(source: UserToUser, mutator: (draft: MutableModel<UserToUser>) => MutableModel<UserToUser> | void): UserToUser;
-}
 
 type EagerUserToFood = {
   readonly [__modelMeta__]: {
@@ -44,11 +12,10 @@ type EagerUserToFood = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly Users?: (UserToFoodUser | null)[] | null;
-  readonly Food?: Food | null;
+  readonly foodId?: string | null;
+  readonly userId?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userToFoodFoodId?: string | null;
 }
 
 type LazyUserToFood = {
@@ -57,11 +24,10 @@ type LazyUserToFood = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly Users: AsyncCollection<UserToFoodUser>;
-  readonly Food: AsyncItem<Food | undefined>;
+  readonly foodId?: string | null;
+  readonly userId?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userToFoodFoodId?: string | null;
 }
 
 export declare type UserToFood = LazyLoading extends LazyLoadingDisabled ? EagerUserToFood : LazyUserToFood
@@ -79,7 +45,7 @@ type EagerFood = {
   readonly img?: string | null;
   readonly name?: string | null;
   readonly dsc?: string | null;
-  readonly pric?: string | null;
+  readonly price?: string | null;
   readonly rate?: string | null;
   readonly country?: string | null;
   readonly createdAt?: string | null;
@@ -95,7 +61,7 @@ type LazyFood = {
   readonly img?: string | null;
   readonly name?: string | null;
   readonly dsc?: string | null;
-  readonly pric?: string | null;
+  readonly price?: string | null;
   readonly rate?: string | null;
   readonly country?: string | null;
   readonly createdAt?: string | null;
@@ -118,8 +84,6 @@ type EagerUser = {
   readonly image?: string | null;
   readonly bio?: string | null;
   readonly sub: string;
-  readonly usertofoods?: (UserToFoodUser | null)[] | null;
-  readonly usertousers?: (UserToUserUser | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -134,8 +98,6 @@ type LazyUser = {
   readonly image?: string | null;
   readonly bio?: string | null;
   readonly sub: string;
-  readonly usertofoods: AsyncCollection<UserToFoodUser>;
-  readonly usertousers: AsyncCollection<UserToUserUser>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -144,72 +106,4 @@ export declare type User = LazyLoading extends LazyLoadingDisabled ? EagerUser :
 
 export declare const User: (new (init: ModelInit<User>) => User) & {
   copyOf(source: User, mutator: (draft: MutableModel<User>) => MutableModel<User> | void): User;
-}
-
-type EagerUserToUserUser = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserToUserUser, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userToUserId?: string | null;
-  readonly userId?: string | null;
-  readonly userToUser: UserToUser;
-  readonly user: User;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyUserToUserUser = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserToUserUser, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userToUserId?: string | null;
-  readonly userId?: string | null;
-  readonly userToUser: AsyncItem<UserToUser>;
-  readonly user: AsyncItem<User>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type UserToUserUser = LazyLoading extends LazyLoadingDisabled ? EagerUserToUserUser : LazyUserToUserUser
-
-export declare const UserToUserUser: (new (init: ModelInit<UserToUserUser>) => UserToUserUser) & {
-  copyOf(source: UserToUserUser, mutator: (draft: MutableModel<UserToUserUser>) => MutableModel<UserToUserUser> | void): UserToUserUser;
-}
-
-type EagerUserToFoodUser = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserToFoodUser, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userToFoodId?: string | null;
-  readonly userId?: string | null;
-  readonly userToFood: UserToFood;
-  readonly user: User;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyUserToFoodUser = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserToFoodUser, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userToFoodId?: string | null;
-  readonly userId?: string | null;
-  readonly userToFood: AsyncItem<UserToFood>;
-  readonly user: AsyncItem<User>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type UserToFoodUser = LazyLoading extends LazyLoadingDisabled ? EagerUserToFoodUser : LazyUserToFoodUser
-
-export declare const UserToFoodUser: (new (init: ModelInit<UserToFoodUser>) => UserToFoodUser) & {
-  copyOf(source: UserToFoodUser, mutator: (draft: MutableModel<UserToFoodUser>) => MutableModel<UserToFoodUser> | void): UserToFoodUser;
 }

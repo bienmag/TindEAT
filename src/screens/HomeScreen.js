@@ -7,22 +7,23 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-const HomeScreen = ({ burgers, user }) => {
-  const onSwipeRight = (food) => {
-    console.warn("swipe right", food.dsc);
-    const createMatch = async () => {
-      await DataStore.save(
-        new UserToFood({
-          userId: user.id,
-          foodId: food.id,
-        })
-      );
-    };
-    createMatch();
+const HomeScreen = ({ burgers }) => {
+  const [currentFood, setCurrentFood] = useState(null);
+  const onSwipeRight = () => {
+    console.warn("swipe right", currentFood.dsc);
+    // const createMatch = async () => {
+    //   await DataStore.save(
+    //     new UserToFood({
+    //       userId: user.id,
+    //       foodId: food.id,
+    //     })
+    //   );
+    // };
+    // createMatch();
   };
 
-  const onSwipeLeft = (food) => {
-    console.warn("swipe left", food.dsc);
+  const onSwipeLeft = () => {
+    console.warn("swipe left", currentFood.dsc);
   };
 
   return (
@@ -32,6 +33,7 @@ const HomeScreen = ({ burgers, user }) => {
         renderItem={({ item }) => <Card food={item} />}
         onSwipeRight={onSwipeRight}
         onSwipeLeft={onSwipeLeft}
+        setCurrentFood={setCurrentFood}
       />
 
       <View style={styles.icons}>

@@ -1,14 +1,7 @@
-type UserToUser @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  userId_1: String
-  userId_2: String
-  Users: [User] @manyToMany(relationName: "UserToUserUser")
-}
-
 type UserToFood @model @auth(rules: [{allow: public}]) {
   id: ID!
-  Users: [User] @manyToMany(relationName: "UserToFoodUser")
-  Food: Food @hasOne
+  foodId: ID
+  userId: ID
 }
 
 type Food @model @auth(rules: [{allow: public}]) {
@@ -16,7 +9,7 @@ type Food @model @auth(rules: [{allow: public}]) {
   img: String
   name: String
   dsc: String
-  pric: String
+  price: String
   rate: String
   country: String
 }
@@ -27,7 +20,5 @@ type User @model @auth(rules: [{allow: public}]) {
   image: String
   bio: String
   sub: String!
-  usertofoods: [UserToFood] @manyToMany(relationName: "UserToFoodUser")
-  usertousers: [UserToUser] @manyToMany(relationName: "UserToUserUser")
 }
  

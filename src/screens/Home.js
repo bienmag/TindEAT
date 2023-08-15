@@ -18,6 +18,7 @@ function Home() {
   const route = useRoute();
   const burgers = route.params.burgers;
   const user = route.params.user;
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.topNavigation}>
