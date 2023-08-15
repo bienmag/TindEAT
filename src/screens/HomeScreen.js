@@ -7,19 +7,21 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-const HomeScreen = ({ burgers }) => {
+import { DataStore } from "aws-amplify";
+import { UserToFood } from "../models";
+const HomeScreen = ({ burgers, user }) => {
   const [currentFood, setCurrentFood] = useState(null);
   const onSwipeRight = () => {
     console.warn("swipe right", currentFood.dsc);
-    // const createMatch = async () => {
-    //   await DataStore.save(
-    //     new UserToFood({
-    //       userId: user.id,
-    //       foodId: food.id,
-    //     })
-    //   );
-    // };
-    // createMatch();
+    const createMatch = async () => {
+      await DataStore.save(
+        new UserToFood({
+          userId: user.id,
+          foodId: currentFood.id,
+        })
+      );
+    };
+    createMatch();
   };
 
   const onSwipeLeft = () => {
