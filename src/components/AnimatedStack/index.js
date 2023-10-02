@@ -103,7 +103,7 @@ const AnimatedStack = (props) => {
     setCurrentFood(currentFood);
   }, [currentFood]);
 
-  return (
+  return currentFood !== undefined && nextFood !== undefined ? (
     <View style={styles.pageContainer}>
       <View style={styles.nextCardContainer}>
         <Animated.View style={[styles.animatedCard, nextCardStyle]}>
@@ -127,6 +127,11 @@ const AnimatedStack = (props) => {
           </Animated.View>
         </PanGestureHandler>
       </GestureHandlerRootView>
+    </View>
+  ) : (
+    <View style={styles.pageContainer}>
+      <Text>No more food yet found. </Text>
+      <Text> Please come back later</Text>
     </View>
   );
 };
